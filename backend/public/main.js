@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const timeTotal = document.querySelector('.time-total');
 
   const API_BASE = 'http://127.0.0.1:8000/api';
-
+  let audio = document.getElementById('audioPlayer');
   let songs = [];
   let currentSongIndex = 0;
   let isPlaying = false;
@@ -191,7 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const s = songs[index];
 
     // set audio file
-    const audio = document.getElementById('audioPlayer');
+    audio = document.getElementById('audioPlayer');
     audio.src = s.url;  // <-- THIS makes the real song load
 
     // set duration display
@@ -216,7 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // PLAYER
   // -------------------------------------------------
   function togglePlay() {
-    const audio = document.getElementById('audioPlayer');
+     audio = document.getElementById('audioPlayer');
 
     if (audio.paused) {
       audio.play();
@@ -426,7 +426,7 @@ if (goToLibraryBtn) {
 // Al cargar la página, mostramos Home por defecto
 showHomeView();
 
-const audioElem = document.getElementById('audioPlayer');
+audioElem = document.getElementById('audioPlayer');
 
 audioElem.addEventListener('timeupdate', () => {
   const total = audioElem.duration;
@@ -443,18 +443,7 @@ audioElem.addEventListener('ended', () => {
   nextSong();
 });
 
-async function loadStats() {
-  try {
-    const res = await fetch("/api/stats");
-    const data = await res.json();
 
-    document.getElementById("total-songs").innerText = data.totalSongs;
-    document.getElementById("total-duration").innerText = data.totalDuration + " min";
-    document.getElementById("favorite-songs").innerText = data.favoriteSongs;
-  } catch (e) {
-    console.error("Error loading stats:", e);
-  }
-}
 
 loadStats();
 
@@ -486,8 +475,7 @@ async function loadStats() {
 }
 
 // Ejecutar al cargar la página
-document.addEventListener("DOMContentLoaded", loadStats);
-const audio = document.getElementById("audioPlayer");
+audio = document.getElementById("audioPlayer");
 const playPauseBtn = document.getElementById("playPauseBtn");
 const playPauseIcon = document.getElementById("playPauseIcon");
 
@@ -554,13 +542,13 @@ volumeBtn.addEventListener("click", () => {
 
 // estado inicial visual
 setVolumeFromRatio(1);
-const audio = document.getElementById("audioPlayer");
-const volumeBar = document.getElementById("volumeBar");
-const volumeFill = document.getElementById("volumeFill");
-const volumeBtn = document.getElementById("volumeBtn");
-const volumeIcon = document.getElementById("volumeIcon");
+audio = document.getElementById("audioPlayer");
+volumeBar = document.getElementById("volumeBar");
+volumeFill = document.getElementById("volumeFill");
+volumeBtn = document.getElementById("volumeBtn");
+volumeIcon = document.getElementById("volumeIcon");
 
-let lastVolume = 1;
+lastVolume = 1;
 
 function setVolume(ratio) {
   ratio = Math.max(0, Math.min(ratio, 1));
