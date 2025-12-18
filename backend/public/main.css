@@ -3202,3 +3202,77 @@ body.hide-metadata .song {
 .songs-panel .songs-list .song .song-duration {
   text-align: center;
 } 
+.play-animate {
+  animation: playPop 0.25s ease;
+}
+
+@keyframes playPop {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.25); }
+  100% { transform: scale(1); }
+}
+.fav-animate {
+  animation: favPulse 0.3s ease;
+}
+
+@keyframes favPulse {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.4); }
+  100% { transform: scale(1); }
+}
+.song-enter {
+  opacity: 0;
+  animation: songFadeUp 0.4s ease forwards;
+}
+
+@keyframes songFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.song-slide-in {
+  opacity: 0;
+  transform: translateX(-40px);
+  animation: songSlideIn 0.5s cubic-bezier(.2,.9,.3,1) forwards;
+}
+
+@keyframes songSlideIn {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+.song-slide-in {
+  opacity: 0;
+  transform: translateX(-60px);
+  animation: slideInSong 4s cubic-bezier(.2,.9,.3,1) forwards;
+}
+
+@keyframes slideInSong {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+.player-now {
+  opacity: 1;
+  transform: translateX(0);
+  transition:
+    transform 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.6s ease;
+}
+
+.player-now.now-exit {
+  transform: translateX(-60px);
+  opacity: 0;
+}
+
+.player-now.now-enter {
+  transform: translateX(0);
+  opacity: 1;
+}

@@ -270,7 +270,9 @@ document.getElementById("deletePlaylistBtn").addEventListener("click", async () 
     list.forEach((s) => {
       const durationSeconds = parseDurationToSeconds(s.duration);
       const row = document.createElement('div');
-      row.className = 'song';
+      row.className = 'song song-slide-in';
+      
+    
 
       const idx = songs.findIndex(x => x.id === s.id);
       if (idx === currentSongIndex) row.classList.add('active');
@@ -306,6 +308,10 @@ document.getElementById("deletePlaylistBtn").addEventListener("click", async () 
       });
 
       row.querySelector('.fav').addEventListener('click', async (e) => {
+        const btn = e.currentTarget;
+btn.classList.add('fav-animate');
+setTimeout(() => btn.classList.remove('fav-animate'), 300);
+
         e.stopPropagation();
         await apiToggleFavorite(e.currentTarget.dataset.id);
         await loadSongs();
@@ -375,6 +381,18 @@ document.getElementById("deletePlaylistBtn").addEventListener("click", async () 
     if (index < 0 || index >= songs.length) return;
     currentSongIndex = index;
     const s = songs[index];
+    const now = document.querySelector('.player-now');
+
+if (now) {
+  now.classList.remove('now-enter');
+  now.classList.add('now-exit');
+
+  setTimeout(() => {
+    now.classList.remove('now-exit');
+    now.classList.add('now-enter');
+  }, 300);
+}
+
 
     document.querySelectorAll('.song').forEach(el => el.classList.remove('active'));
     const activeRow = Array.from(document.querySelectorAll('.song'))
@@ -388,11 +406,22 @@ document.getElementById("deletePlaylistBtn").addEventListener("click", async () 
     timeTotal.textContent = formatDuration(parseDurationToSeconds(s.duration || 0));
     progressFill.style.width = '0%';
 
-    if (autoPlay) {
-      audioElem.play().catch(() => { });
-      playBtn.textContent = 'pause';
-      isPlaying = true;
-    }
+
+
+   if (autoPlay) {
+  audioElem.play().catch(() => {});
+  if (playIcon) playIcon.textContent = 'pause';
+  isPlaying = true;
+
+    const player = document.querySelector('.music-player');
+  player?.classList.remove('song-change');
+  void player?.offsetWidth;
+  player?.classList.add('song-change');
+
+
+
+}
+
   }
 
   function togglePlay() {
@@ -436,6 +465,11 @@ document.getElementById("deletePlaylistBtn").addEventListener("click", async () 
   });
 
   playBtn?.addEventListener('click', togglePlay);
+playBtn?.addEventListener('click', () => {
+  playBtn.classList.remove('play-animate');
+  void playBtn.offsetWidth; // fuerza reinicio de animación
+  playBtn.classList.add('play-animate');
+});
 
   document.querySelectorAll('.control-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -708,3 +742,4 @@ document.getElementById("deletePlaylistBtn").addEventListener("click", async () 
   })();
 
 });
+
